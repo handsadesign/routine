@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Routine">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#2A2622" id="tc">
+<title>Routine</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+
+html{background:#2A2622;transition:background .5s ease}
+body{
+  min-height:100dvh;
+  color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+  font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top) + 22px) 22px calc(env(safe-area-inset-bottom) + 32px);
+  max-width:520px;margin:0 auto;
+  transition:background .5s ease,color .5s ease;
+}
+
+.mincho{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+
+.top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:38px}
+.wd{font-size:15px;letter-spacing:.14em;color:var(--dim)}
+.arrows{display:flex;gap:2px}
+.ar{
+  width:38px;height:38px;border:none;background:none;color:var(--dim);
+  font-size:20px;line-height:1;cursor:pointer;border-radius:50%;font-family:inherit;
+}
+.ar:active{background:var(--veil)}
+.ar:focus-visible{outline:1px solid var(--accent);outline-offset:-6px}
+
+.hero{margin-bottom:34px}
+.word{
+  font-size:70px;line-height:1;letter-spacing:.08em;font-weight:400;
+  display:inline-block;position:relative;
+}
+.word.long{font-size:50px}
+.bar{height:2px;background:var(--veil);margin-top:16px;position:relative;overflow:hidden}
+.fill{
+  position:absolute;inset:0;width:0;background:var(--accent);
+  transition:width .55s cubic-bezier(.22,1,.36,1);
+}
+.meta{display:flex;align-items:center;gap:14px;margin-top:14px;font-size:13.5px;color:var(--dim)}
+.pour{color:var(--gold);display:flex;align-items:center;gap:6px}
+.pour i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
+.note{font-size:14px;line-height:1.75;color:var(--dim);margin-top:18px;max-width:34em}
+
+.next{
+  border-top:1px solid var(--veil);border-bottom:1px solid var(--veil);
+  padding:20px 0;margin-bottom:26px;
+}
+.nlab{font-size:12px;letter-spacing:.16em;color:var(--faint);margin-bottom:9px}
+.nrow{display:flex;align-items:baseline;gap:15px}
+.ntime{font-size:27px;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:var(--accent)}
+.ntxt{font-size:17px;line-height:1.4}
+.nsub{font-size:13px;color:var(--dim);margin-top:5px}
+
+.list{list-style:none;margin-bottom:34px}
+.row{
+  display:flex;align-items:flex-start;gap:0;padding:13px 0;width:100%;
+  background:none;border:none;color:inherit;font-family:inherit;text-align:left;
+  border-bottom:1px solid var(--hair);cursor:pointer;
+}
+.row:last-child{border-bottom:none}
+.row:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+.rt{
+  width:52px;flex:none;font-size:13.5px;color:var(--faint);
+  font-variant-numeric:tabular-nums;padding-top:3px;
+}
+.rb{flex:1;padding:0 14px}
+.rtitle{font-size:15.5px;line-height:1.45}
+.rsub{font-size:12.5px;color:var(--faint);margin-top:2px}
+.mk{
+  width:19px;height:19px;flex:none;border-radius:50%;margin-top:3px;
+  border:1px solid var(--veil);position:relative;
+  transition:background .25s,border-color .25s,transform .25s;
+}
+.mk::after{
+  content:"";position:absolute;left:5.5px;top:2.5px;width:5px;height:9px;
+  border:solid var(--field);border-width:0 1.5px 1.5px 0;
+  transform:rotate(45deg) scale(0);transition:transform .25s cubic-bezier(.34,1.6,.64,1);
+}
+.row.on .mk{background:var(--accent);border-color:var(--accent)}
+.row.on .mk::after{transform:rotate(45deg) scale(1)}
+.row.on .rtitle{color:var(--dim)}
+.row.now .rt{color:var(--accent)}
+.row.past:not(.on) .rtitle{color:var(--dim)}
+
+.foot{border-top:1px solid var(--veil);padding-top:22px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px}
+.d{
+  background:none;border:none;padding:9px 0 11px;cursor:pointer;
+  font-family:inherit;font-size:13px;color:var(--faint);border-radius:9px;
+}
+.d:focus-visible{outline:1px solid var(--accent);outline-offset:-4px}
+.d.sel{color:var(--ink);background:var(--veil)}
+.d s{display:block;width:6px;height:6px;border-radius:50%;margin:7px auto 0;
+  background:none;border:1px solid var(--faint);text-decoration:none}
+.d s.half{background:linear-gradient(90deg,currentColor 50%,transparent 50%);border-color:currentColor}
+.d s.full{background:currentColor;border-color:currentColor}
+.stat{display:flex;align-items:baseline;gap:9px;color:var(--dim);font-size:13.5px}
+.stat b{font-size:29px;font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.intro{animation:rise .7s cubic-bezier(.22,1,.36,1) both}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wd" id="wd"></div>
+  <div class="arrows">
+    <button class="ar" id="prev" aria-label="前の日">‹</button>
+    <button class="ar" id="next" aria-label="次の日">›</button>
+  </div>
+</div>
+
+<div class="hero intro">
+  <div class="word mincho" id="word"></div>
+  <div class="bar"><div class="fill" id="fill"></div></div>
+  <div class="meta" id="meta"></div>
+  <p class="note" id="note"></p>
+</div>
+
+<div class="next">
+  <div class="nlab" id="nlab">次</div>
+  <div class="nrow">
+    <div class="ntime" id="ntime"></div>
+    <div>
+      <div class="ntxt" id="ntxt"></div>
+      <div class="nsub" id="nsub"></div>
+    </div>
+  </div>
+</div>
+
+<ul class="list" id="list"></ul>
+
+<div class="foot">
+  <div class="week" id="week"></div>
+  <div class="stat"><b id="streak">0</b><span>日つづけて達成</span></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   予定データ。書き換えるのはこのブロックだけ。
+
+   word    画面に大きく出る言葉
+   kind    "run" 深緑 / "easy" 青 / "rest" 土色
+   drink   true なら飲む日
+   note    その日の一行
+   events  ["時刻","やること","補足"]  補足は空でも可
+   ══════════════════════════════════════════════════════════════ */
+
+var WEEK = [
+{
+  word:"休足", kind:"rest", drink:false,
+  note:"日曜の長距離明け。走らずに脚を戻す。",
+  events:[
+    ["6:00","起床","水を一杯、カーテンを開ける"],
+    ["6:15","10分の散歩","朝の光を浴びる"],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["19:00","夕食","米あり"],
+    ["21:00","入浴とストレッチ",""],
+    ["21:30","プランク 30秒 × 2",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"長距離", kind:"run", drink:false,
+  note:"前夜も今日も飲まない。いちばん脚が動く日。",
+  events:[
+    ["6:00","起床","水を一杯、カーテンを開ける"],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["15:30","補給","バナナかおにぎり"],
+    ["17:00","長距離ラン","夕食前・90分ほど"],
+    ["18:30","シャワーと水分",""],
+    ["19:00","夕食","米あり、しっかり"],
+    ["21:00","入浴とストレッチ",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"休足", kind:"rest", drink:true,
+  note:"昨日の長距離明け。飲む日なので夕食の米はなし。",
+  events:[
+    ["6:00","起床","水を一杯、カーテンを開ける"],
+    ["6:15","10分の散歩","朝の光を浴びる"],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["19:00","夕食","米なし、たんぱく質と野菜"],
+    ["19:30","お酒",""],
+    ["21:00","切り上げて入浴",""],
+    ["21:30","プランク 30秒 × 2",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"軽いラン", kind:"easy", drink:true,
+  note:"明日は長距離。控えめにして21時で終える。",
+  events:[
+    ["6:00","起床","水を一杯"],
+    ["6:15","軽いラン 30分","朝の光を浴びながら"],
+    ["6:45","シャワー",""],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["19:00","夕食","米なし、たんぱく質と野菜"],
+    ["19:30","お酒","控えめに"],
+    ["21:00","切り上げて入浴",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"長距離", kind:"run", drink:false,
+  note:"今週2本目。昨日を抑えられていれば軽い。",
+  events:[
+    ["6:00","起床","水を一杯、カーテンを開ける"],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["15:30","補給","バナナかおにぎり"],
+    ["17:00","長距離ラン","夕食前・90分ほど"],
+    ["18:30","シャワーと水分",""],
+    ["19:00","夕食","米あり、しっかり"],
+    ["21:00","入浴とストレッチ",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"休足", kind:"rest", drink:true,
+  note:"外出で疲れる日。20時台で切り上げると明日の朝が違う。",
+  events:[
+    ["6:00","起床","水を一杯、カーテンを開ける"],
+    ["6:15","10分の散歩",""],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["19:00","夕食","米なし、たんぱく質と野菜"],
+    ["19:30","お酒","控えめに"],
+    ["20:30","切り上げて入浴",""],
+    ["22:30","就寝",""]
+  ]
+},
+{
+  word:"軽いラン", kind:"easy", drink:true,
+  note:"走ってから、夜は料理とお酒をゆっくり。明日は休足。",
+  events:[
+    ["6:00","起床","水を一杯"],
+    ["6:15","軽いラン 30分","朝の光を浴びながら"],
+    ["6:45","シャワー",""],
+    ["12:00","昼食","腸活パウダー・米あり"],
+    ["19:00","夕食","米なし、料理を楽しむ"],
+    ["19:30","お酒",""],
+    ["21:00","切り上げて入浴",""],
+    ["22:30","就寝",""]
+  ]
+}
+];
+
+/* ══ ここから下は書き換え不要 ══ */
+
+var SKIN = {
+  run  : {field:"#0D2C22", ink:"#E7F3EC", dim:"#9BBBAC", faint:"#6C8D7E",
+          accent:"#79DCAE", veil:"rgba(231,243,236,.14)", hair:"rgba(231,243,236,.07)"},
+  easy : {field:"#152F49", ink:"#E6EFF8", dim:"#A3BAD1", faint:"#728DA8",
+          accent:"#86BDEC", veil:"rgba(230,239,248,.14)", hair:"rgba(230,239,248,.07)"},
+  rest : {field:"#2A2521", ink:"#F0EAE2", dim:"#B6ABA0", faint:"#87796B",
+          accent:"#DFC79C", veil:"rgba(240,234,226,.13)", hair:"rgba(240,234,226,.07)"}
+};
+var GOLD = "#E2A85C";
+var WD = ["月曜日","火曜日","水曜日","木曜日","金曜日","土曜日","日曜日"];
+var WS = ["月","火","水","木","金","土","日"];
+var KEY = "routine.v2";
+
+function idx(d){ return (d.getDay() + 6) % 7; }
+function stamp(d){
+  return d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2);
+}
+function monday(d){
+  var m = new Date(d);
+  m.setHours(0,0,0,0);
+  m.setDate(m.getDate() - idx(m));
+  return m;
+}
+function dateOf(i){
+  var d = new Date(base);
+  d.setDate(d.getDate() + i);
+  return d;
+}
+function load(){
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; }
+}
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(done)); } catch(e){}
+}
+function mins(t){ var p = t.split(":"); return +p[0]*60 + +p[1]; }
+
+var now = new Date();
+var base = monday(now);
+var today = idx(now);
+var cur = today;
+var done = load();
+
+function marks(date){
+  return done[stamp(date)] || [];
+}
+function ratio(i){
+  var d = WEEK[i], m = marks(dateOf(i));
+  var n = 0;
+  d.events.forEach(function(e){ if (m.indexOf(e[0]) >= 0) n++; });
+  return n / d.events.length;
+}
+function streak(){
+  var n = 0;
+  var d = new Date(now);
+  d.setHours(0,0,0,0);
+  if (!full(d)) d.setDate(d.getDate() - 1);
+  while (full(d)){ n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function full(d){
+  var plan = WEEK[idx(d)], m = done[stamp(d)];
+  if (!m) return false;
+  return plan.events.every(function(e){ return m.indexOf(e[0]) >= 0; });
+}
+
+function toggle(i, time){
+  var k = stamp(dateOf(i));
+  var a = done[k] || (done[k] = []);
+  var at = a.indexOf(time);
+  if (at >= 0) a.splice(at,1); else a.push(time);
+  if (!a.length) delete done[k];
+  save();
+  render();
+}
+
+function el(t,c,x){ var n=document.createElement(t); if(c)n.className=c; if(x)n.textContent=x; return n; }
+
+function render(){
+  var d = WEEK[cur], s = SKIN[d.kind], m = marks(dateOf(cur));
+  var r = document.documentElement.style;
+  ["field","ink","dim","faint","accent","veil","hair"].forEach(function(k){
+    r.setProperty("--" + k, s[k]);
+  });
+  r.setProperty("--gold", GOLD);
+  document.documentElement.style.background = s.field;
+  document.body.style.background = s.field;
+  document.getElementById("tc").setAttribute("content", s.field);
+
+  var lbl = WD[cur];
+  if (cur === today) lbl += "・今日";
+  else if (cur === (today+1)%7) lbl += "・明日";
+  document.getElementById("wd").textContent = lbl;
+
+  var w = document.getElementById("word");
+  w.textContent = d.word;
+  w.className = "word mincho" + (d.word.length > 3 ? " long" : "");
+
+  var pct = ratio(cur);
+  document.getElementById("fill").style.width = (pct * 100) + "%";
+
+  var meta = document.getElementById("meta");
+  meta.innerHTML = "";
+  if (d.drink){
+    var p = el("span","pour");
+    p.appendChild(el("i"));
+    p.appendChild(el("span",null,"飲む日"));
+    meta.appendChild(p);
+  } else {
+    meta.appendChild(el("span",null,"飲まない日"));
+  }
+  meta.appendChild(el("span",null, Math.round(pct * d.events.length) + " / " + d.events.length));
+
+  document.getElementById("note").textContent = d.note;
+
+  var nowMin = now.getHours()*60 + now.getMinutes();
+  var nextI = -1;
+  for (var i = 0; i < d.events.length; i++){
+    if (m.indexOf(d.events[i][0]) < 0){ nextI = i; break; }
+  }
+
+  var list = document.getElementById("list");
+  list.innerHTML = "";
+  d.events.forEach(function(e, i){
+    var on = m.indexOf(e[0]) >= 0;
+    var b = el("button","row" + (on ? " on" : "") +
+      (cur === today && mins(e[0]) < nowMin ? " past" : "") +
+      (i === nextI ? " now" : ""));
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.appendChild(el("div","rt",e[0]));
+    var mid = el("div","rb");
+    mid.appendChild(el("div","rtitle",e[1]));
+    if (e[2]) mid.appendChild(el("div","rsub",e[2]));
+    b.appendChild(mid);
+    b.appendChild(el("div","mk"));
+    b.onclick = function(){ toggle(cur, e[0]); };
+    list.appendChild(b);
+  });
+
+  if (nextI < 0){
+    document.getElementById("nlab").textContent = "";
+    document.getElementById("ntime").textContent = "";
+    document.getElementById("ntxt").textContent = "今日はぜんぶ終わり";
+    document.getElementById("nsub").textContent = "おつかれさま";
+  } else {
+    document.getElementById("nlab").textContent = "次";
+    document.getElementById("ntime").textContent = d.events[nextI][0];
+    document.getElementById("ntxt").textContent = d.events[nextI][1];
+    document.getElementById("nsub").textContent = d.events[nextI][2];
+  }
+
+  var wk = document.getElementById("week");
+  wk.innerHTML = "";
+  WEEK.forEach(function(x, i){
+    var b = el("button","d" + (i === cur ? " sel" : ""), WS[i]);
+    b.setAttribute("aria-label", WD[i]);
+    var t = ratio(i);
+    var dot = el("s", t >= 1 ? "full" : (t > 0 ? "half" : ""));
+    b.appendChild(dot);
+    b.onclick = function(){ cur = i; render(); };
+    wk.appendChild(b);
+  });
+
+  document.getElementById("streak").textContent = streak();
+}
+
+function go(n){
+  cur = (cur + n + 7) % 7;
+  render();
+}
+document.getElementById("prev").onclick = function(){ go(-1); };
+document.getElementById("next").onclick = function(){ go(1); };
+addEventListener("keydown", function(e){
+  if (e.key === "ArrowLeft") go(-1);
+  if (e.key === "ArrowRight") go(1);
+});
+
+var sx = null, sy = null;
+addEventListener("touchstart", function(e){
+  sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+}, {passive:true});
+addEventListener("touchend", function(e){
+  if (sx === null) return;
+  var dx = e.changedTouches[0].clientX - sx;
+  var dy = e.changedTouches[0].clientY - sy;
+  if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
+  sx = null;
+}, {passive:true});
+
+addEventListener("visibilitychange", function(){
+  if (document.hidden) return;
+  now = new Date();
+  var b = monday(now), t = idx(now);
+  if (+b !== +base || t !== today){ base = b; today = t; cur = t; }
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
