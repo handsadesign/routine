@@ -26,17 +26,19 @@ body{
 
 .mincho{font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
 
-.top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:38px}
+.top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:34px}
 .wd{font-size:15px;letter-spacing:.14em;color:var(--dim)}
+.wd em{font-style:normal;color:var(--faint);margin-left:9px;font-size:13px;letter-spacing:.1em}
 .arrows{display:flex;gap:2px}
 .ar{
   width:38px;height:38px;border:none;background:none;color:var(--dim);
   font-size:20px;line-height:1;cursor:pointer;border-radius:50%;font-family:inherit;
 }
 .ar:active{background:var(--veil)}
+.ar:disabled{color:var(--hair);cursor:default}
 .ar:focus-visible{outline:1px solid var(--accent);outline-offset:-6px}
 
-.hero{margin-bottom:34px}
+.hero{margin-bottom:32px}
 .word{
   font-size:70px;line-height:1;letter-spacing:.08em;font-weight:400;
   display:inline-block;position:relative;
@@ -48,21 +50,21 @@ body{
   transition:width .55s cubic-bezier(.22,1,.36,1);
 }
 .meta{display:flex;align-items:center;gap:14px;margin-top:14px;font-size:13.5px;color:var(--dim)}
-.pour{color:var(--gold);display:flex;align-items:center;gap:6px}
-.pour i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
+.up{color:var(--gold);display:flex;align-items:center;gap:6px}
+.up i{width:5px;height:5px;border-radius:50%;background:var(--gold);display:block}
 .note{font-size:14px;line-height:1.75;color:var(--dim);margin-top:18px;max-width:34em}
 
 .next{
   border-top:1px solid var(--veil);border-bottom:1px solid var(--veil);
-  padding:20px 0;margin-bottom:26px;
+  padding:20px 0;margin-bottom:24px;
 }
 .nlab{font-size:12px;letter-spacing:.16em;color:var(--faint);margin-bottom:9px}
 .nrow{display:flex;align-items:baseline;gap:15px}
-.ntime{font-size:27px;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:var(--accent)}
+.ntime{font-size:24px;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:var(--accent);flex:none}
 .ntxt{font-size:17px;line-height:1.4}
 .nsub{font-size:13px;color:var(--dim);margin-top:5px}
 
-.list{list-style:none;margin-bottom:34px}
+.list{list-style:none;margin-bottom:18px}
 .row{
   display:flex;align-items:flex-start;gap:0;padding:13px 0;width:100%;
   background:none;border:none;color:inherit;font-family:inherit;text-align:left;
@@ -74,7 +76,7 @@ body{
   width:52px;flex:none;font-size:13.5px;color:var(--faint);
   font-variant-numeric:tabular-nums;padding-top:3px;
 }
-.rb{flex:1;padding:0 14px}
+.rb{flex:1;padding-right:12px;min-width:0}
 .rtitle{font-size:15.5px;line-height:1.45}
 .rsub{font-size:12.5px;color:var(--faint);margin-top:2px}
 .mk{
@@ -90,23 +92,52 @@ body{
 .row.on .mk{background:var(--accent);border-color:var(--accent)}
 .row.on .mk::after{transform:rotate(45deg) scale(1)}
 .row.on .rtitle{color:var(--dim)}
-.row.now .rt{color:var(--accent)}
+.row.now .rtitle{color:var(--ink)}
+.row.now .rsub{color:var(--dim)}
 .row.past:not(.on) .rtitle{color:var(--dim)}
 
-.foot{border-top:1px solid var(--veil);padding-top:22px}
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px}
-.d{
-  background:none;border:none;padding:9px 0 11px;cursor:pointer;
-  font-family:inherit;font-size:13px;color:var(--faint);border-radius:9px;
+.wt{display:flex;align-items:baseline;gap:3px;flex:none;margin:1px 13px 0 0}
+.wt input{
+  width:46px;padding:4px 0;background:none;border:none;
+  border-bottom:1px solid var(--veil);color:var(--accent);
+  font-family:inherit;font-size:15px;text-align:right;
+  font-variant-numeric:tabular-nums;-moz-appearance:textfield;
 }
-.d:focus-visible{outline:1px solid var(--accent);outline-offset:-4px}
-.d.sel{color:var(--ink);background:var(--veil)}
-.d s{display:block;width:6px;height:6px;border-radius:50%;margin:7px auto 0;
-  background:none;border:1px solid var(--faint);text-decoration:none}
-.d s.half{background:linear-gradient(90deg,currentColor 50%,transparent 50%);border-color:currentColor}
-.d s.full{background:currentColor;border-color:currentColor}
+.wt input::-webkit-outer-spin-button,.wt input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.wt input::placeholder{color:var(--faint);font-size:12.5px}
+.wt input:focus{outline:none;border-bottom-color:var(--accent)}
+.wt span{font-size:11.5px;color:var(--faint)}
+
+.caution{font-size:12.5px;color:var(--faint);margin-bottom:26px;line-height:1.7}
+details{margin-bottom:30px;border-top:1px solid var(--hair);padding-top:16px}
+summary{font-size:12.5px;letter-spacing:.12em;color:var(--faint);cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:" +";}
+details[open] summary::after{content:" −";}
+details ol{margin:14px 0 0 1.2em;font-size:13px;color:var(--dim);line-height:1.9}
+
+.foot{border-top:1px solid var(--veil);padding-top:22px}
+.ch{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:7px}
+.ch span{text-align:center;font-size:11px;color:var(--faint);letter-spacing:.04em}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:22px}
+.c{
+  background:none;border:none;padding:7px 0 8px;cursor:pointer;border-radius:8px;
+  font-family:inherit;font-size:10.5px;color:var(--faint);
+  font-variant-numeric:tabular-nums;line-height:1;
+}
+.c:focus-visible{outline:1px solid var(--accent);outline-offset:-3px}
+.c.sel{background:var(--veil);color:var(--ink)}
+.c.today{color:var(--accent)}
+.c s{
+  display:block;width:7px;height:7px;border-radius:50%;margin:6px auto 0;
+  text-decoration:none;background:none;border:1px solid var(--hair);
+}
+.c.gym s{border-color:var(--faint)}
+.c s.half{background:linear-gradient(90deg,var(--accent) 50%,transparent 50%);border-color:var(--accent)}
+.c s.full{background:var(--accent);border-color:var(--accent)}
 .stat{display:flex;align-items:baseline;gap:9px;color:var(--dim);font-size:13.5px}
 .stat b{font-size:29px;font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat u{text-decoration:none;margin-left:auto;font-size:12.5px;color:var(--faint)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -142,296 +173,332 @@ body{
 </div>
 
 <ul class="list" id="list"></ul>
+<p class="caution" id="caution"></p>
+
+<details>
+  <summary>重さの決め方</summary>
+  <ol>
+    <li>1セット目は目安の重さで10回</li>
+    <li>あと5回以上いける → 次のセットで1段階上げる</li>
+    <li>あと2〜3回でつらい → その重さで続行（これが基準）</li>
+    <li>10回いかない → 1段階下げる</li>
+  </ol>
+</details>
 
 <div class="foot">
-  <div class="week" id="week"></div>
-  <div class="stat"><b id="streak">0</b><span>日つづけて達成</span></div>
+  <div class="ch" id="ch"></div>
+  <div class="cal" id="cal"></div>
+  <div class="stat">
+    <b id="doneN">0</b><span>回 / 全12回</span><u id="left"></u>
+  </div>
 </div>
 
 <script>
 /* ══════════════════════════════════════════════════════════════
-   予定データ。書き換えるのはこのブロックだけ。
+   1ヶ月チャレンジの設定。ふだん書き換えるのはこの3つだけ。
 
-   word    画面に大きく出る言葉
-   kind    "run" 深緑 / "easy" 青 / "rest" 土色
-   drink   true なら飲む日
-   note    その日の一行
-   events  ["時刻","やること","補足"]  補足は空でも可
+   START  チャレンジ開始日（YYYY-MM-DD）
+   WEEKS  何週間つづけるか
+   GYM    ジムに行く曜日  0=月 1=火 2=水 3=木 4=金 5=土 6=日
    ══════════════════════════════════════════════════════════════ */
 
-var WEEK = [
-{
-  word:"休足", kind:"rest", drink:false,
-  note:"日曜の長距離明け。走らずに脚を戻す。",
-  events:[
-    ["6:00","起床","水を一杯、カーテンを開ける"],
-    ["6:15","10分の散歩","朝の光を浴びる"],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["19:00","夕食","米あり"],
-    ["21:00","入浴とストレッチ",""],
-    ["21:30","プランク 30秒 × 2",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"長距離", kind:"run", drink:false,
-  note:"前夜も今日も飲まない。いちばん脚が動く日。",
-  events:[
-    ["6:00","起床","水を一杯、カーテンを開ける"],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["15:30","補給","バナナかおにぎり"],
-    ["17:00","長距離ラン","夕食前・90分ほど"],
-    ["18:30","シャワーと水分",""],
-    ["19:00","夕食","米あり、しっかり"],
-    ["21:00","入浴とストレッチ",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"休足", kind:"rest", drink:true,
-  note:"昨日の長距離明け。飲む日なので夕食の米はなし。",
-  events:[
-    ["6:00","起床","水を一杯、カーテンを開ける"],
-    ["6:15","10分の散歩","朝の光を浴びる"],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["19:00","夕食","米なし、たんぱく質と野菜"],
-    ["19:30","お酒",""],
-    ["21:00","切り上げて入浴",""],
-    ["21:30","プランク 30秒 × 2",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"軽いラン", kind:"easy", drink:true,
-  note:"明日は長距離。控えめにして21時で終える。",
-  events:[
-    ["6:00","起床","水を一杯"],
-    ["6:15","軽いラン 30分","朝の光を浴びながら"],
-    ["6:45","シャワー",""],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["19:00","夕食","米なし、たんぱく質と野菜"],
-    ["19:30","お酒","控えめに"],
-    ["21:00","切り上げて入浴",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"長距離", kind:"run", drink:false,
-  note:"今週2本目。昨日を抑えられていれば軽い。",
-  events:[
-    ["6:00","起床","水を一杯、カーテンを開ける"],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["15:30","補給","バナナかおにぎり"],
-    ["17:00","長距離ラン","夕食前・90分ほど"],
-    ["18:30","シャワーと水分",""],
-    ["19:00","夕食","米あり、しっかり"],
-    ["21:00","入浴とストレッチ",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"休足", kind:"rest", drink:true,
-  note:"外出で疲れる日。20時台で切り上げると明日の朝が違う。",
-  events:[
-    ["6:00","起床","水を一杯、カーテンを開ける"],
-    ["6:15","10分の散歩",""],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["19:00","夕食","米なし、たんぱく質と野菜"],
-    ["19:30","お酒","控えめに"],
-    ["20:30","切り上げて入浴",""],
-    ["22:30","就寝",""]
-  ]
-},
-{
-  word:"軽いラン", kind:"easy", drink:true,
-  note:"走ってから、夜は料理とお酒をゆっくり。明日は休足。",
-  events:[
-    ["6:00","起床","水を一杯"],
-    ["6:15","軽いラン 30分","朝の光を浴びながら"],
-    ["6:45","シャワー",""],
-    ["12:00","昼食","腸活パウダー・米あり"],
-    ["19:00","夕食","米なし、料理を楽しむ"],
-    ["19:30","お酒",""],
-    ["21:00","切り上げて入浴",""],
-    ["22:30","就寝",""]
-  ]
-}
-];
+var START = "2026-09-14";
+var WEEKS = 4;
+var GYM   = [0, 2, 5];          // 月・水・土
+
+/* 何週目から重さを1段階上げるか */
+var STEPUP = 3;
+
+/* ── メニュー ──────────────────────────────────────────────
+   items は ["種目","セット×回","目安kg","補足"]
+   目安kg を "" にすると重さ欄が出ない（自重・有酸素）
+   ────────────────────────────────────────────────────────── */
+
+var WARMUP = ["エアロバイク + 肩回し", "5分", "", "ウォームアップ・かかと寄りで踏む"];
+
+var MENU = {
+  A: {
+    word:"胸と背中", kind:"a",
+    note:"押す・引くの日。すべて座るか寝る種目で、足の付け根に体重はかからない。",
+    items:[
+      WARMUP,
+      ["チェストプレス",          "3 × 10",  "20〜25", ""],
+      ["ラットプルダウン",        "3 × 10",  "25〜30", ""],
+      ["ダンベルベンチプレス",    "2 × 10",  "8〜10",  "片手の重さ"],
+      ["シーテッドロー",          "3 × 10",  "25〜30", ""],
+      ["ダンベルカール",          "2 × 12",  "6〜8",   "片手の重さ"],
+      ["トライセプスプッシュダウン","2 × 12", "10〜15", ""],
+      ["プランク",                "3 × 30秒", "",      ""]
+    ]
+  },
+  B: {
+    word:"肩と脚", kind:"b",
+    note:"肩・体幹・下半身。脚はマシンで座ったまま、最後にバイクで締める。",
+    items:[
+      WARMUP,
+      ["ショルダープレス",        "3 × 10",  "15〜20", "ダンベルなら片手6〜8kg"],
+      ["サイドレイズ",            "2 × 12",  "3〜4",   "片手の重さ"],
+      ["ペックフライ",            "2 × 12",  "15〜20", ""],
+      ["レッグエクステンション",  "3 × 12",  "20〜25", ""],
+      ["レッグカール",            "3 × 12",  "15〜20", ""],
+      ["デッドバグ",              "3 × 10",  "",       ""],
+      ["エアロバイク",            "15〜20分","",       "軽く汗ばむ程度"]
+    ]
+  },
+  off: {
+    word:"オフ", kind:"off",
+    note:"走らない月。動かさずに休めて、たんぱく質だけは切らさない。",
+    items:[
+      ["6:00",  "起床",       "", "水を一杯、カーテンを開ける"],
+      ["6:15",  "10分の散歩", "", "痛みがあればその日は休む"],
+      ["12:00", "昼食",       "", "手のひらサイズの肉か魚"],
+      ["19:00", "夕食",       "", "手のひらサイズの肉か魚・夜の炭水化物は控えめ"],
+      ["21:00", "入浴とストレッチ", "", ""],
+      ["22:30", "就寝",       "", ""]
+    ]
+  }
+};
 
 /* ══ ここから下は書き換え不要 ══ */
 
 var SKIN = {
-  run  : {field:"#0D2C22", ink:"#E7F3EC", dim:"#9BBBAC", faint:"#6C8D7E",
-          accent:"#79DCAE", veil:"rgba(231,243,236,.14)", hair:"rgba(231,243,236,.07)"},
-  easy : {field:"#152F49", ink:"#E6EFF8", dim:"#A3BAD1", faint:"#728DA8",
-          accent:"#86BDEC", veil:"rgba(230,239,248,.14)", hair:"rgba(230,239,248,.07)"},
-  rest : {field:"#2A2521", ink:"#F0EAE2", dim:"#B6ABA0", faint:"#87796B",
-          accent:"#DFC79C", veil:"rgba(240,234,226,.13)", hair:"rgba(240,234,226,.07)"}
+  a  : {field:"#0D2C22", ink:"#E7F3EC", dim:"#9BBBAC", faint:"#6C8D7E",
+        accent:"#79DCAE", veil:"rgba(231,243,236,.14)", hair:"rgba(231,243,236,.07)"},
+  b  : {field:"#152F49", ink:"#E6EFF8", dim:"#A3BAD1", faint:"#728DA8",
+        accent:"#86BDEC", veil:"rgba(230,239,248,.14)", hair:"rgba(230,239,248,.07)"},
+  off: {field:"#2A2521", ink:"#F0EAE2", dim:"#B6ABA0", faint:"#87796B",
+        accent:"#DFC79C", veil:"rgba(240,234,226,.13)", hair:"rgba(240,234,226,.07)"}
 };
 var GOLD = "#E2A85C";
 var WD = ["月曜日","火曜日","水曜日","木曜日","金曜日","土曜日","日曜日"];
 var WS = ["月","火","水","木","金","土","日"];
-var KEY = "routine.v2";
+var KEY = "routine.gym.v1";
 
-function idx(d){ return (d.getDay() + 6) % 7; }
+var DAYS = WEEKS * 7;
+var s0 = new Date(START + "T00:00:00");
+
+function wd(d){ return (d.getDay() + 6) % 7; }
 function stamp(d){
   return d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0"+d.getDate()).slice(-2);
 }
-function monday(d){
-  var m = new Date(d);
-  m.setHours(0,0,0,0);
-  m.setDate(m.getDate() - idx(m));
-  return m;
-}
 function dateOf(i){
-  var d = new Date(base);
+  var d = new Date(s0);
   d.setDate(d.getDate() + i);
   return d;
 }
+function indexOfDate(d){
+  var x = new Date(d);
+  x.setHours(0,0,0,0);
+  return Math.round((x - s0) / 86400000);
+}
+function isGym(i){ return GYM.indexOf(wd(dateOf(i))) >= 0; }
+function session(i){                       // その日が通算何回目のジムか（0始まり）
+  var n = 0;
+  for (var k = 0; k < i; k++) if (isGym(k)) n++;
+  return n;
+}
+function planOf(i){
+  if (!isGym(i)) return MENU.off;
+  return session(i) % 2 === 0 ? MENU.A : MENU.B;
+}
+function weekOf(i){ return Math.floor(i / 7) + 1; }
+
 function load(){
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; }
 }
 function save(){
-  try { localStorage.setItem(KEY, JSON.stringify(done)); } catch(e){}
+  try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){}
 }
-function mins(t){ var p = t.split(":"); return +p[0]*60 + +p[1]; }
-
-var now = new Date();
-var base = monday(now);
-var today = idx(now);
-var cur = today;
-var done = load();
-
-function marks(date){
-  return done[stamp(date)] || [];
+function rec(i){
+  var k = stamp(dateOf(i));
+  return store[k] || (store[k] = {d:[], w:{}});
+}
+function marks(i){
+  var k = stamp(dateOf(i));
+  return (store[k] && store[k].d) || [];
 }
 function ratio(i){
-  var d = WEEK[i], m = marks(dateOf(i));
-  var n = 0;
-  d.events.forEach(function(e){ if (m.indexOf(e[0]) >= 0) n++; });
-  return n / d.events.length;
+  var p = planOf(i), m = marks(i), n = 0;
+  p.items.forEach(function(e){ if (m.indexOf(e[1] === "" ? e[0] : e[0] + e[1]) >= 0) n++; });
+  return n / p.items.length;
 }
-function streak(){
-  var n = 0;
-  var d = new Date(now);
-  d.setHours(0,0,0,0);
-  if (!full(d)) d.setDate(d.getDate() - 1);
-  while (full(d)){ n++; d.setDate(d.getDate() - 1); }
-  return n;
-}
-function full(d){
-  var plan = WEEK[idx(d)], m = done[stamp(d)];
-  if (!m) return false;
-  return plan.events.every(function(e){ return m.indexOf(e[0]) >= 0; });
-}
+function idOf(e){ return e[1] === "" ? e[0] : e[0] + e[1]; }
 
-function toggle(i, time){
-  var k = stamp(dateOf(i));
-  var a = done[k] || (done[k] = []);
-  var at = a.indexOf(time);
-  if (at >= 0) a.splice(at,1); else a.push(time);
-  if (!a.length) delete done[k];
+function toggle(i, e){
+  var r = rec(i), id = idOf(e);
+  var at = r.d.indexOf(id);
+  if (at >= 0) r.d.splice(at,1); else r.d.push(id);
   save();
   render();
+}
+function setWeight(i, name, v){
+  var r = rec(i);
+  if (v === "") delete r.w[name]; else r.w[name] = v;
+  save();
+}
+function lastWeight(i, name){              // 直近の同じ種目の記録を探す
+  for (var k = i - 1; k >= 0; k--){
+    var r = store[stamp(dateOf(k))];
+    if (r && r.w && r.w[name] != null) return r.w[name];
+  }
+  return null;
+}
+function doneCount(){
+  var n = 0;
+  for (var i = 0; i < DAYS; i++) if (isGym(i) && ratio(i) >= 1) n++;
+  return n;
+}
+function totalSessions(){
+  var n = 0;
+  for (var i = 0; i < DAYS; i++) if (isGym(i)) n++;
+  return n;
 }
 
 function el(t,c,x){ var n=document.createElement(t); if(c)n.className=c; if(x)n.textContent=x; return n; }
 
+var now = new Date();
+var today = indexOfDate(now);
+var cur = Math.min(Math.max(today, 0), DAYS - 1);
+var store = load();
+
 function render(){
-  var d = WEEK[cur], s = SKIN[d.kind], m = marks(dateOf(cur));
-  var r = document.documentElement.style;
+  var p = planOf(cur), s = SKIN[p.kind], m = marks(cur), r = rec(cur);
+  var st = document.documentElement.style;
   ["field","ink","dim","faint","accent","veil","hair"].forEach(function(k){
-    r.setProperty("--" + k, s[k]);
+    st.setProperty("--" + k, s[k]);
   });
-  r.setProperty("--gold", GOLD);
+  st.setProperty("--gold", GOLD);
   document.documentElement.style.background = s.field;
   document.body.style.background = s.field;
   document.getElementById("tc").setAttribute("content", s.field);
 
-  var lbl = WD[cur];
+  var d = dateOf(cur);
+  var lbl = WD[wd(d)];
   if (cur === today) lbl += "・今日";
-  else if (cur === (today+1)%7) lbl += "・明日";
-  document.getElementById("wd").textContent = lbl;
+  else if (cur === today + 1) lbl += "・明日";
+  var head = document.getElementById("wd");
+  head.textContent = lbl;
+  head.appendChild(el("em", null, "第" + weekOf(cur) + "週"));
 
   var w = document.getElementById("word");
-  w.textContent = d.word;
-  w.className = "word mincho" + (d.word.length > 3 ? " long" : "");
+  w.textContent = p.word;
+  w.className = "word mincho" + (p.word.length > 3 ? " long" : "");
 
   var pct = ratio(cur);
   document.getElementById("fill").style.width = (pct * 100) + "%";
 
   var meta = document.getElementById("meta");
   meta.innerHTML = "";
-  if (d.drink){
-    var p = el("span","pour");
-    p.appendChild(el("i"));
-    p.appendChild(el("span",null,"飲む日"));
-    meta.appendChild(p);
+  if (isGym(cur)){
+    meta.appendChild(el("span", null, (session(cur) + 1) + " 回目"));
+    if (weekOf(cur) >= STEPUP){
+      var u = el("span","up");
+      u.appendChild(el("i"));
+      u.appendChild(el("span", null, "1段階上げる週"));
+      meta.appendChild(u);
+    }
   } else {
-    meta.appendChild(el("span",null,"飲まない日"));
+    meta.appendChild(el("span", null, "ジムのない日"));
   }
-  meta.appendChild(el("span",null, Math.round(pct * d.events.length) + " / " + d.events.length));
+  meta.appendChild(el("span", null, Math.round(pct * p.items.length) + " / " + p.items.length));
 
-  document.getElementById("note").textContent = d.note;
+  document.getElementById("note").textContent = p.note;
+  document.getElementById("caution").textContent =
+    isGym(cur) ? "足に痛みが出たら、その種目は即中止。セット間は90秒〜2分休む。" : "";
 
-  var nowMin = now.getHours()*60 + now.getMinutes();
   var nextI = -1;
-  for (var i = 0; i < d.events.length; i++){
-    if (m.indexOf(d.events[i][0]) < 0){ nextI = i; break; }
+  for (var i = 0; i < p.items.length; i++){
+    if (m.indexOf(idOf(p.items[i])) < 0){ nextI = i; break; }
   }
 
   var list = document.getElementById("list");
   list.innerHTML = "";
-  d.events.forEach(function(e, i){
-    var on = m.indexOf(e[0]) >= 0;
-    var b = el("button","row" + (on ? " on" : "") +
-      (cur === today && mins(e[0]) < nowMin ? " past" : "") +
-      (i === nextI ? " now" : ""));
+  p.items.forEach(function(e, i){
+    var on = m.indexOf(idOf(e)) >= 0;
+    var b = el("button","row" + (on ? " on" : "") + (i === nextI ? " now" : ""));
     b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.appendChild(el("div","rt",e[0]));
+
+    if (!isGym(cur)) b.appendChild(el("div","rt", e[0]));
+
     var mid = el("div","rb");
-    mid.appendChild(el("div","rtitle",e[1]));
-    if (e[2]) mid.appendChild(el("div","rsub",e[2]));
+    mid.appendChild(el("div","rtitle", isGym(cur) ? e[0] : e[1]));
+    var sub = isGym(cur) ? e[1] : e[3];
+    if (isGym(cur) && e[3]) sub += "　" + e[3];
+    if (sub) mid.appendChild(el("div","rsub", sub));
     b.appendChild(mid);
+
+    if (isGym(cur) && e[2]){
+      var box = el("div","wt");
+      var inp = document.createElement("input");
+      inp.type = "number"; inp.step = "0.5"; inp.min = "0";
+      inp.setAttribute("inputmode","decimal");
+      inp.setAttribute("aria-label", e[0] + " の重さ");
+      var prev = lastWeight(cur, e[0]);
+      inp.placeholder = prev != null ? prev : e[2];
+      if (r.w[e[0]] != null) inp.value = r.w[e[0]];
+      inp.onclick = function(ev){ ev.stopPropagation(); };
+      inp.onchange = function(){ setWeight(cur, e[0], inp.value); };
+      box.appendChild(inp);
+      box.appendChild(el("span", null, "kg"));
+      b.appendChild(box);
+    }
+
     b.appendChild(el("div","mk"));
-    b.onclick = function(){ toggle(cur, e[0]); };
+    b.onclick = function(){ toggle(cur, e); };
     list.appendChild(b);
   });
 
   if (nextI < 0){
     document.getElementById("nlab").textContent = "";
     document.getElementById("ntime").textContent = "";
-    document.getElementById("ntxt").textContent = "今日はぜんぶ終わり";
+    document.getElementById("ntxt").textContent = isGym(cur) ? "今日のメニューは終わり" : "今日はぜんぶ終わり";
     document.getElementById("nsub").textContent = "おつかれさま";
   } else {
+    var e = p.items[nextI];
     document.getElementById("nlab").textContent = "次";
-    document.getElementById("ntime").textContent = d.events[nextI][0];
-    document.getElementById("ntxt").textContent = d.events[nextI][1];
-    document.getElementById("nsub").textContent = d.events[nextI][2];
+    document.getElementById("ntime").textContent = isGym(cur) ? e[1] : e[0];
+    document.getElementById("ntxt").textContent = isGym(cur) ? e[0] : e[1];
+    document.getElementById("nsub").textContent = e[3];
   }
 
-  var wk = document.getElementById("week");
-  wk.innerHTML = "";
-  WEEK.forEach(function(x, i){
-    var b = el("button","d" + (i === cur ? " sel" : ""), WS[i]);
-    b.setAttribute("aria-label", WD[i]);
-    var t = ratio(i);
-    var dot = el("s", t >= 1 ? "full" : (t > 0 ? "half" : ""));
-    b.appendChild(dot);
-    b.onclick = function(){ cur = i; render(); };
-    wk.appendChild(b);
-  });
+  var ch = document.getElementById("ch");
+  if (!ch.childElementCount) WS.forEach(function(x){ ch.appendChild(el("span", null, x)); });
 
-  document.getElementById("streak").textContent = streak();
+  var cal = document.getElementById("cal");
+  cal.innerHTML = "";
+  for (var i = 0; i < DAYS; i++){
+    (function(i){
+      var dd = dateOf(i), t = ratio(i), g = isGym(i);
+      var b = el("button","c" + (g ? " gym" : "") + (i === cur ? " sel" : "") + (i === today ? " today" : ""),
+             String(dd.getDate()));
+      b.setAttribute("aria-label", stamp(dd) + (g ? " ジム" : " オフ"));
+      b.appendChild(el("s", t >= 1 ? "full" : (t > 0 ? "half" : "")));
+      b.onclick = function(){ cur = i; render(); };
+      cal.appendChild(b);
+    })(i);
+  }
+
+  document.getElementById("doneN").textContent = doneCount();
+  document.querySelector(".stat span").textContent = "回 / 全" + totalSessions() + "回";
+  var rest = DAYS - today;
+  document.getElementById("left").textContent =
+    today < 0 ? "開始まで " + (-today) + "日" :
+    rest > 0  ? "残り " + rest + "日" : "終了";
+
+  document.getElementById("prev").disabled = cur <= 0;
+  document.getElementById("next").disabled = cur >= DAYS - 1;
 }
 
 function go(n){
-  cur = (cur + n + 7) % 7;
+  var v = cur + n;
+  if (v < 0 || v > DAYS - 1) return;
+  cur = v;
   render();
 }
 document.getElementById("prev").onclick = function(){ go(-1); };
 document.getElementById("next").onclick = function(){ go(1); };
 addEventListener("keydown", function(e){
+  if (e.target.tagName === "INPUT") return;
   if (e.key === "ArrowLeft") go(-1);
   if (e.key === "ArrowRight") go(1);
 });
@@ -451,8 +518,9 @@ addEventListener("touchend", function(e){
 addEventListener("visibilitychange", function(){
   if (document.hidden) return;
   now = new Date();
-  var b = monday(now), t = idx(now);
-  if (+b !== +base || t !== today){ base = b; today = t; cur = t; }
+  var t = indexOfDate(now);
+  if (t !== today){ today = t; cur = Math.min(Math.max(t, 0), DAYS - 1); }
+  store = load();
   render();
 });
 
